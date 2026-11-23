@@ -5,266 +5,303 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090910">
+<meta name="description" content="NEXUS AI - Seu assistente inteligente">
+<link rel="manifest" href="./manifest.json">
 <title>NEXUS AI</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#090910;
+  --panel:#12121c;
+  --border:#29293a;
+  --purple:#a855f7;
+  --text:#fff;
+  --muted:#9292a5;
 }
-
-body {
-  background: #090910;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  min-height:100vh;
 }
-
-header {
-  height: 75px;
-  padding: 0 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #242432;
+button,input{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{
+  width:260px;
+  background:#0e0e17;
+  border-right:1px solid var(--border);
+  padding:24px 16px;
+  display:flex;
+  flex-direction:column;
 }
-
-.logo {
-  font-size: 23px;
-  font-weight: 900;
-  letter-spacing: 2px;
+.logo{font-size:25px;font-weight:900;letter-spacing:2px}
+.logo span{color:var(--purple)}
+.new{
+  margin:35px 0 25px;
+  padding:14px;
+  border:1px solid #7136a5;
+  background:#251334;
+  color:white;
+  border-radius:12px;
+  text-align:left;
 }
-
-.logo span {
-  color: #a855f7;
+.nav-title{font-size:11px;color:var(--muted);margin:12px 10px}
+.nav button{
+  display:block;width:100%;padding:13px;
+  text-align:left;color:#bbb;
+  background:transparent;border:0;border-radius:10px;
+  margin:4px 0;
 }
-
-.status {
-  font-size: 11px;
-  color: #c084fc;
-  border: 1px solid #7136a5;
-  padding: 7px 11px;
-  border-radius: 20px;
+.nav button:hover,.nav button.active{
+  background:#241533;color:#d8b4fe;
 }
-
-main {
-  max-width: 760px;
-  margin: auto;
-  padding: 55px 22px 35px;
+.side-bottom{margin-top:auto;color:#777;font-size:12px}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{
+  height:70px;padding:0 25px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
 }
-
-.welcome {
-  text-align: center;
-  margin-bottom: 38px;
+.topbar span{color:#c084fc;font-size:12px}
+.profile{
+  width:36px;height:36px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#a855f7,#4c1d95);
 }
-
-.icon {
-  width: 75px;
-  height: 75px;
-  margin: 0 auto 23px;
-  border-radius: 24px;
-  background: linear-gradient(135deg,#a855f7,#4c1d95);
-  display: grid;
-  place-items: center;
-  font-size: 35px;
-  box-shadow: 0 0 45px #8b5cf655;
+.content{
+  width:100%;max-width:850px;
+  margin:auto;padding:35px 22px;
+  flex:1;
 }
-
-h1 {
-  font-size: 32px;
-  margin-bottom: 12px;
+.welcome{text-align:center;margin:20px 0 35px}
+.symbol{
+  width:72px;height:72px;margin:auto auto 20px;
+  display:grid;place-items:center;
+  font-size:34px;border-radius:23px;
+  background:linear-gradient(135deg,#a855f7,#4c1d95);
+  box-shadow:0 0 40px #9333ea55;
 }
-
-h1 span {
-  color: #b66cff;
+h1{font-size:32px;margin-bottom:12px}
+h1 span{color:#c084fc}
+.welcome p{color:var(--muted);font-size:14px;line-height:1.7}
+.section{font-size:12px;color:#aaa;margin:25px 0 13px}
+.tools{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
-
-.welcome p {
-  color: #9292a5;
-  line-height: 1.6;
-  font-size: 14px;
+.tool{
+  padding:19px;background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;color:white;
+  text-align:left;transition:.2s;
 }
-
-.section-title {
-  color: #aaaabd;
-  font-size: 13px;
-  margin-bottom: 15px;
+.tool:hover{border-color:var(--purple);transform:translateY(-2px)}
+.tool .emoji{font-size:24px}
+.tool b{display:block;margin:12px 0 6px;font-size:14px}
+.tool p{font-size:12px;color:var(--muted);line-height:1.5}
+.messages{
+  margin-top:20px;display:flex;flex-direction:column;gap:12px;
 }
-
-.tools {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 12px;
-  margin-bottom: 35px;
+.message{
+  max-width:85%;padding:14px 16px;
+  border-radius:15px;font-size:14px;line-height:1.6;
+  white-space:pre-wrap;
 }
-
-.tool {
-  background: #13131e;
-  border: 1px solid #29293b;
-  border-radius: 15px;
-  padding: 18px;
-  cursor: pointer;
-  transition: .2s;
+.user{align-self:flex-end;background:#59268b}
+.bot{align-self:flex-start;background:#191923;border:1px solid var(--border)}
+.composer{
+  display:flex;gap:10px;padding:12px;
+  background:#151520;border:1px solid #39304b;
+  border-radius:16px;margin-top:20px;
 }
-
-.tool:active {
-  transform: scale(.97);
-  border-color: #a855f7;
+.composer input{
+  flex:1;min-width:0;background:transparent;
+  border:0;outline:0;color:white;font-size:14px;
 }
-
-.tool b {
-  display: block;
-  font-size: 14px;
-  margin: 10px 0 6px;
+.send{
+  background:#9333ea;color:white;border:0;
+  border-radius:11px;padding:12px 17px;
 }
-
-.tool p {
-  font-size: 11px;
-  color: #88889c;
-  line-height: 1.5;
-}
-
-.tool-icon {
-  font-size: 23px;
-}
-
-.chat {
-  background: #13131e;
-  border: 1px solid #38304c;
-  padding: 15px;
-  border-radius: 17px;
-  display: flex;
-  gap: 10px;
-}
-
-.chat input {
-  flex: 1;
-  min-width: 0;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: white;
-  font-size: 14px;
-}
-
-.chat button {
-  background: #9333ea;
-  color: white;
-  border: none;
-  padding: 12px 16px;
-  border-radius: 11px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#response {
-  display: none;
-  background: #171321;
-  border: 1px solid #633b88;
-  padding: 17px;
-  border-radius: 14px;
-  margin-top: 15px;
-  color: #ddd0f1;
-  line-height: 1.6;
-  font-size: 14px;
-  white-space: pre-wrap;
-}
-
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #626274;
-  font-size: 11px;
-}
-
-@media(max-width:400px) {
-  h1 { font-size: 27px; }
-  main { padding-top: 40px; }
+.notice{font-size:11px;color:#777;text-align:center;margin-top:12px}
+.mobile-menu{display:none;background:none;border:0;color:white;font-size:23px}
+footer{text-align:center;color:#666;font-size:11px;padding:20px}
+@media(max-width:700px){
+  .sidebar{
+    position:fixed;z-index:10;left:-270px;top:0;
+    height:100%;transition:.25s;
+  }
+  .sidebar.open{left:0}
+  .mobile-menu{display:block}
+  .topbar{padding:0 15px}
+  .content{padding:25px 15px}
+  h1{font-size:27px}
+  .welcome{margin-top:35px}
 }
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<header>
+<aside class="sidebar" id="sidebar">
   <div class="logo">NEXUS<span> AI.</span></div>
-  <div class="status">✦ INTELIGÊNCIA ARTIFICIAL</div>
-</header>
+  <button class="new" onclick="newChat()">＋ Nova conversa</button>
 
-<main>
+  <div class="nav-title">MENU PRINCIPAL</div>
+  <nav class="nav">
+    <button class="active" onclick="showHome()">✦ Início</button>
+    <button onclick="chooseTool('Assistente IA')">🤖 Assistente IA</button>
+    <button onclick="chooseTool('Criador de legendas')">✍️ Criar legendas</button>
+    <button onclick="chooseTool('Gerador de prompts')">🎨 Gerar prompts</button>
+    <button onclick="chooseTool('Ideias criativas')">🚀 Ideias criativas</button>
+  </nav>
 
-  <section class="welcome">
-    <div class="icon">✦</div>
-    <h1>Olá, seja bem-vindo ao <span>NEXUS</span></h1>
-    <p>Seu espaço de inteligência artificial.<br>
-    O que vamos criar hoje?</p>
-  </section>
+  <div class="nav-title">CONTA</div>
+  <nav class="nav">
+    <button onclick="showHistory()">◷ Histórico</button>
+    <button onclick="showSettings()">⚙️ Configurações</button>
+  </nav>
 
-  <p class="section-title">EXPLORE NOSSAS FERRAMENTAS</p>
+  <div class="side-bottom">NEXUS AI © 2026</div>
+</aside>
 
-  <section class="tools">
-    <div class="tool" onclick="choose('Ajude-me a criar uma ideia incrível.')">
-      <div class="tool-icon">✦</div>
-      <b>Assistente IA</b>
-      <p>Converse e descubra novas possibilidades.</p>
-    </div>
+<section class="main">
+  <header class="topbar">
+    <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+    <span>✦ SEU ESPAÇO INTELIGENTE</span>
+    <div class="profile">L</div>
+  </header>
 
-    <div class="tool" onclick="choose('Crie uma legenda criativa para meu vídeo.')">
-      <div class="tool-icon">✍️</div>
-      <b>Criar legendas</b>
-      <p>Legendas para Instagram e TikTok.</p>
-    </div>
+  <main class="content" id="content">
+    <section class="welcome">
+      <div class="symbol">✦</div>
+      <h1>Olá, bem-vindo ao <span>NEXUS</span></h1>
+      <p>Seu espaço de inteligência artificial.<br>
+      O que vamos criar hoje?</p>
+    </section>
 
-    <div class="tool" onclick="choose('Crie um prompt profissional para gerar uma imagem.')">
-      <div class="tool-icon">🎨</div>
-      <b>Prompts de imagem</b>
-      <p>Crie descrições para imagens incríveis.</p>
-    </div>
+    <div class="section">EXPLORE AS FERRAMENTAS</div>
 
-    <div class="tool" onclick="choose('Me dê ideias de vídeos virais.')">
-      <div class="tool-icon">🚀</div>
-      <b>Ideias criativas</b>
-      <p>Inspire-se e crie novos projetos.</p>
-    </div>
-  </section>
+    <section class="tools">
+      <button class="tool" onclick="chooseTool('Assistente IA')">
+        <div class="emoji">🤖</div>
+        <b>Assistente IA</b>
+        <p>Converse e explore novas ideias.</p>
+      </button>
+      <button class="tool" onclick="chooseTool('Criador de legendas')">
+        <div class="emoji">✍️</div>
+        <b>Criar legendas</b>
+        <p>Legendas para suas redes sociais.</p>
+      </button>
+      <button class="tool" onclick="chooseTool('Gerador de prompts')">
+        <div class="emoji">🎨</div>
+        <b>Gerar prompts</b>
+        <p>Crie descrições para imagens.</p>
+      </button>
+      <button class="tool" onclick="chooseTool('Ideias criativas')">
+        <div class="emoji">🚀</div>
+        <b>Ideias criativas</b>
+        <p>Descubra novas possibilidades.</p>
+      </button>
+    </section>
 
-  <p class="section-title">CONVERSE COM O NEXUS</p>
+    <div class="section">CONVERSE COM O NEXUS</div>
+    <div class="messages" id="messages"></div>
 
-  <div class="chat">
-    <input id="message" placeholder="Pergunte qualquer coisa...">
-    <button onclick="sendMessage()">Enviar ➜</button>
-  </div>
+    <form class="composer" id="chatForm">
+      <input id="message" placeholder="Digite sua mensagem..." autocomplete="off">
+      <button class="send" type="submit">Enviar ➜</button>
+    </form>
+    <div class="notice">O assistente inteligente será conectado na próxima etapa.</div>
+  </main>
 
-  <div id="response"></div>
-
-</main>
-
-<footer>
-  NEXUS AI © 2026 — Seu futuro começa aqui.
-</footer>
+  <footer>NEXUS AI — Seu futuro começa aqui.</footer>
+</section>
+</div>
 
 <script>
-function choose(text) {
-  document.getElementById("message").value = text;
-  document.getElementById("message").focus();
+const messages = document.getElementById("messages");
+const input = document.getElementById("message");
+const content = document.getElementById("content");
+
+let history = JSON.parse(localStorage.getItem("nexusHistory") || "[]");
+
+function saveHistory(){
+  localStorage.setItem("nexusHistory",JSON.stringify(history));
 }
 
-function sendMessage() {
-  const input = document.getElementById("message");
-  const response = document.getElementById("response");
+function addMessage(text,type){
+  const div=document.createElement("div");
+  div.className="message "+type;
+  div.textContent=text;
+  messages.appendChild(div);
+  messages.scrollIntoView({behavior:"smooth",block:"end"});
+}
 
-  if (!input.value.trim()) return;
+function sendMessage(text){
+  const value=(text || input.value).trim();
+  if(!value)return;
 
-  response.style.display = "block";
-  response.textContent =
-    "Sua mensagem foi preparada!\n\n" +
-    "O NEXUS AI ainda precisa ser conectado a um serviço de inteligência artificial para responder de verdade.\n\n" +
-    "Mensagem: " + input.value;
+  addMessage(value,"user");
+  history.push({type:"user",text:value});
+  saveHistory();
+  input.value="";
 
-  input.value = "";
+  addMessage(
+    "Recebi sua mensagem! O sistema de inteligência artificial ainda está sendo configurado. Em breve você poderá conversar comigo de verdade.",
+    "bot"
+  );
+}
+
+document.getElementById("chatForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  sendMessage();
+});
+
+function chooseTool(tool){
+  input.value="Quero usar a ferramenta: "+tool+".";
+  input.focus();
+  document.getElementById("sidebar").classList.remove("open");
+}
+
+function newChat(){
+  messages.innerHTML="";
+  input.value="";
+  document.getElementById("sidebar").classList.remove("open");
+}
+
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
+function showHome(){
+  location.reload();
+}
+
+function showHistory(){
+  messages.innerHTML="";
+  if(history.length===0){
+    addMessage("Ainda não existem conversas salvas.","bot");
+    return;
+  }
+  history.forEach(item=>addMessage(item.text,item.type));
+  document.getElementById("sidebar").classList.remove("open");
+}
+
+function showSettings(){
+  messages.innerHTML="";
+  addMessage("Configurações\n\nNEXUS AI\nVersão 1.0\nTema: Escuro\nIdioma: Português (Brasil)","bot");
+  document.getElementById("sidebar").classList.remove("open");
+}
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("./sw.js").catch(console.error);
+  });
 }
 </script>
-
 </body>
 </html>
