@@ -4,6 +4,7 @@
   "short_name": "NEXUS",
   "description": "Seu assistente inteligente",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#090910",
   "theme_color": "#090910",
